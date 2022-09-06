@@ -69,6 +69,7 @@ const Register = () => {
       //   alert("posted");
       axios.post("http://localhost:9002/register", user).then((res) => {
         alert(res.data.message);
+        navigate("/login");
         // console.log(res.data.message);
       });
     } else {

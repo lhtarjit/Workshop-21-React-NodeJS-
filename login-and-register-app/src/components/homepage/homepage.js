@@ -31,11 +31,11 @@ const Button = styled.div`
   }
 `;
 
-const Homepage = () => {
+const Homepage = ({ setLoginUser }) => {
   return (
     <Container>
-      <h1>Hello </h1>
-      <Button>Logout</Button>
+      <h1>Hello Homepage </h1>
+      <Button onClick={() => setLoginUser({})}>Logout</Button>
     </Container>
   );
 };
