@@ -7,16 +7,10 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(cors());
 
-mongoose.connect(
-  " ",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  () => {
-    console.log("DB connected");
-  }
-);
+mongoose.connect("mongodb://localhost:27017/react-workshop", () => {
+  console.log("DATABASE is connected!");
+});
+
 const userSchema = new mongoose.Schema({
   name: String,
   email: String,
@@ -26,6 +20,13 @@ const userSchema = new mongoose.Schema({
 const User = new mongoose.model("User", userSchema);
 
 //Routes
+// app.post("/login", (req, res) => {
+//   res.send("my api login");
+// });
+app.get("/", (req, res) => {
+  res.send("login-register-app");
+});
+
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
   User.findOne({ email: email }, (err, user) => {
@@ -40,11 +41,14 @@ app.post("/login", (req, res) => {
     }
   });
 });
+// app.post("/register", (req, res) => {
+//   console.log(req.body);
+// });
 app.post("/register", (req, res) => {
   const { name, email, password } = req.body;
   User.findOne({ email: email }, (err, user) => {
     if (user) {
-      res.send({ message: "User Already Registered" });
+      res.send({ message: "User already registerd" });
     } else {
       const user = new User({
         name,
@@ -55,13 +59,13 @@ app.post("/register", (req, res) => {
         if (err) {
           res.send(err);
         } else {
-          res.send({ message: "Successfully Registered" });
+          res.send({ message: "Successfully Registered, Please login now." });
         }
       });
     }
   });
+});
 
-  app.listen(9002, () => {
-    console.log("BE started at port 9002");
-  });
+app.listen(9002, () => {
+  console.log("BE started at port 9002");
 });

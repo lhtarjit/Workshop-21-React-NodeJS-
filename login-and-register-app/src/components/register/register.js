@@ -66,9 +66,11 @@ const Register = () => {
   const register = () => {
     const { name, email, password, reEnterPassword } = user;
     if (name && email && password && password === reEnterPassword) {
-      axios
-        .post("http://localhost:9002/register", user)
-        .then((res) => console.log(res));
+      //   alert("posted");
+      axios.post("http://localhost:9002/register", user).then((res) => {
+        alert(res.data.message);
+        // console.log(res.data.message);
+      });
     } else {
       alert("Invalid Input");
     }

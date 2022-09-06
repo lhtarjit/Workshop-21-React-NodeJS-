@@ -47,7 +47,7 @@ const Button = styled.button`
   }
 `;
 
-const Login = () => {
+const Login = ({ setLoginUser }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
@@ -61,9 +61,11 @@ const Login = () => {
     });
   };
   const login = () => {
-    axios
-      .post("http://localhost:9002/login", user)
-      .then((res) => alert(res.data.message));
+    axios.post("http://localhost:9002/login", user).then((res) => {
+      alert(res.data.message);
+      setLoginUser(res.data.message);
+      navigate("/");
+    });
   };
   return (
     <Container>
