@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 400px;
@@ -30,6 +32,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
+  width: 390px;
   background: #1877f2;
   border: 1px solid #1877f2;
   color: #fff;
@@ -45,6 +48,8 @@ const Button = styled.button`
 `;
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -57,6 +62,16 @@ const Register = () => {
       ...user,
       [name]: value,
     });
+  };
+  const register = () => {
+    const { name, email, password, reEnterPassword } = user;
+    if (name && email && password && password === reEnterPassword) {
+      axios
+        .post("http://localhost:9002/register", user)
+        .then((res) => console.log(res));
+    } else {
+      alert("Invalid Input");
+    }
   };
 
   return (
@@ -91,9 +106,9 @@ const Register = () => {
         placeholder="Re-enter your Password"
         onChange={handleChange}
       />
-      <Button>Login</Button>
+      <Button onClick={register}>Register</Button>
       <div>or</div>
-      <Button> Register</Button>
+      <Button onClick={() => navigate("/login")}>Login</Button>
     </Container>
   );
 };

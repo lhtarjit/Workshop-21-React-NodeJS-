@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Homepage from "./components/homepage/homepage";
 import Login from "./components/login/login";
 import Register from "./components/register/register";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
 
 const Wrap = styled.div`
   text-align: center;
@@ -19,12 +21,33 @@ const Wrap = styled.div`
 `;
 
 function App() {
+  const [user, setLoginUser] = useState({});
   return (
     <Wrap>
       <div className="App">
-        <Homepage />
-        {/* <Login /> */}
-        {/* <Register /> */}
+        <Router>
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={user && user._id ? <Homepage /> : <Login />}
+            />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+            // path="/"
+            // {...(user && user._id ? (
+            //   <Route element={<Homepage />}
+            // ) : (
+            //    element => {<Login />}
+            // ))}
+            // // element={<Homepage />}
+            />
+          </Routes>
+        </Router>
+        {/* <Homepage></Homepage>
+        <Login></Login>
+        <Register></Register> */}
       </div>
     </Wrap>
   );

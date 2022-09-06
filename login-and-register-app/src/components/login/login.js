@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 400px;
@@ -30,6 +32,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
+  width: 390px;
   background: #1877f2;
   border: 1px solid #1877f2;
   color: #fff;
@@ -45,6 +48,7 @@ const Button = styled.button`
 `;
 
 const Login = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -55,6 +59,11 @@ const Login = () => {
       ...user,
       [name]: value,
     });
+  };
+  const login = () => {
+    axios
+      .post("http://localhost:9002/login", user)
+      .then((res) => alert(res.data.message));
   };
   return (
     <Container>
@@ -74,9 +83,9 @@ const Login = () => {
         placeholder="Enter your Password"
         onChange={handleChange}
       />
-      <Button>Login</Button>
+      <Button onClick={login}>Login</Button>
       <div>or</div>
-      <Button> Register</Button>
+      <Button onClick={() => navigate("/register")}> Register</Button>
     </Container>
   );
 };
