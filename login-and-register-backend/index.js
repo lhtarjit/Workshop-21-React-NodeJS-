@@ -48,7 +48,7 @@ app.post("/register", (req, res) => {
   const { name, email, password } = req.body;
   User.findOne({ email: email }, (err, user) => {
     if (user) {
-      res.send({ message: "User already registerd" });
+      res.send({ message: "User already registered" });
     } else {
       const user = new User({
         name,
